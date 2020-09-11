@@ -53,7 +53,7 @@
 *				the iot.semtech.com site.
 *
 * Arguments   : *Data_Tx pointer to tranmit buffer
-*				*Data_Rx pointer to receive buffer
+*				*Data_Rx pointer to receive sBuffer
 *				*RFM_Command pointer to current RFM state
 *				*Session_Data pointer to sLoRa_Session sturct
 *				*OTAA_Data pointer to sLoRa_OTAA struct
@@ -68,6 +68,14 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
 	static const unsigned int Receive_Delay_2 = 2000;
 	unsigned long prevTime = 0;
 
+  Serial.begin(115200);
+  delay(2000);
+
+  //Serial.println("in LORA_Cycle -- ");
+  //Serial.println((String)"Data_Tx: "+*Data_Tx->Data);
+  //Serial.println((String)"Data_Rx: "+*Data_Rx->Data);
+  //Serial.println((String)"sLoRa_Message.Frame_Port: "+Message_Rx->Frame_Port);
+  //Serial.println((String)"sLoRa_Message.Direction: "+Message_Rx->Direction);
   //Transmit
   if(*RFM_Command == NEW_RFM_COMMAND)
   {
@@ -439,6 +447,7 @@ static void Generate_DevNonce(unsigned char *DevNonce)
 {
   unsigned int RandNumber;
 
+  randomSeed(micros());
   RandNumber = random(0xFFFF);
 
   DevNonce[0] = RandNumber & 0x00FF;
