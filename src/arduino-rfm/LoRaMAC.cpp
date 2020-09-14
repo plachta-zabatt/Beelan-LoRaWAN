@@ -69,47 +69,6 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
   unsigned char i;
 	unsigned long prevTime = 0;
 
-  #ifdef DEBUG_LVL2
-    Serial.println("\n----------------------------------------");
-    Serial.println("START LORA_Cycle -- ");
-    Serial.print((String)"Data_Tx: ");
-    for ( i = 0;i < Data_Tx->Counter; i++)
-    {
-      Serial.print(Data_Tx->Data[i], HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    Serial.print((String)"Data_Rx: ");
-    for (i = 0;i < Data_Rx->Counter; i++)
-    {
-      Serial.print(Data_Rx->Data[i], HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    Serial.println("----");
-    Serial.println((String)"Message_Rx.MAC_Header: "+Message_Rx->MAC_Header);
-    Serial.print((String)"Message_Rx.DevAddr: ");
-    for (i = 0;i < 4; i++)
-    {
-      Serial.print(Message_Rx->DevAddr[i], HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    Serial.println((String)"Message_Rx.Frame_Control: "+Message_Rx->Frame_Control);
-    Serial.println((String)"Message_Rx.Frame_Counter: "+Message_Rx->Frame_Counter);
-    Serial.println((String)"Message_Rx.Frame_Port: "+Message_Rx->Frame_Port);
-    Serial.print((String)"Message_Rx.Frame_Options: ");
-    for (i = 0;i < 15; i++)
-    {
-      Serial.print(Message_Rx->Frame_Options[i], HEX);
-      Serial.print(" ");
-    }
-    Serial.println();
-    Serial.println((String)"Message_Rx.Direction: "+Message_Rx->Direction);
-    Serial.println("END LORA_Cycle -- ");
-    Serial.println("----------------------------------------\n");
-  #endif
-
   //Transmit
   if(*RFM_Command == NEW_RFM_COMMAND)
   {
@@ -146,6 +105,36 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
 		LORA_Receive_Data(Data_Rx, Session_Data, OTAA_Data, Message_Rx, LoRa_Settings);
 		*RFM_Command = NO_RFM_COMMAND;
 	}
+
+    #ifdef DEBUG_LVL2
+    Serial.println("\n----------------------------------------");
+    Serial.println("START LORA_Cycle -- ");
+    Serial.print("")
+
+    Serial.println("---");    
+    Serial.println((String)"Message_Rx.MAC_Header: "+Message_Rx->MAC_Header);
+    Serial.print((String)"Message_Rx.DevAddr: ");
+    for (i = 0;i < 4; i++)
+    {
+      Serial.print(Message_Rx->DevAddr[i], HEX);
+      Serial.print(" ");
+    }
+    Serial.println();
+    Serial.println((String)"Message_Rx.Frame_Control: "+Message_Rx->Frame_Control);
+    Serial.println((String)"Message_Rx.Frame_Counter: "+Message_Rx->Frame_Counter);
+    Serial.println((String)"Message_Rx.Frame_Port: "+Message_Rx->Frame_Port);
+    Serial.print((String)"Message_Rx.Frame_Options: ");
+    for (i = 0;i < 15; i++)
+    {
+      Serial.print(Message_Rx->Frame_Options[i], HEX);
+      Serial.print(" ");
+    }
+    Serial.println();
+    Serial.println((String)"Message_Rx.Direction: "+Message_Rx->Direction);
+    Serial.println("END LORA_Cycle -- ");
+    Serial.println("----------------------------------------\n");
+  #endif
+
 }
 
 /*
@@ -279,6 +268,20 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
       LoRa_Settings->Channel_Tx = 0x00;
     }
   }
+
+
+  #ifdef DEBUG_LVL2
+    Serial.println("\n----------------------------------------");
+    Serial.println("START LORA_Send_Data -- ");
+    Serial.print((String)"Data_Tx: ");
+    for (i = 0;i < Data_Tx->Counter; i++)
+    {
+      Serial.print(Data_Tx->Data[i], HEX);
+      Serial.print(" ");
+    }
+    Serial.println();
+    Serial.println("END LORA_Send_Data -- ");
+  #endif
 }
 
 
@@ -468,6 +471,18 @@ void LORA_Receive_Data(sBuffer *Data_Rx, sLoRa_Session *Session_Data, sLoRa_OTAA
 			Data_Rx->Counter = 0x00;
  		}
 	}
+  #ifdef DEBUG_LVL2
+    Serial.println("\n----------------------------------------");
+    Serial.println("START LORA_Receive_Data -- ");
+    Serial.print((String)"Data_Rx: ");
+    for (i = 0;i < Data_Rx->Counter; i++)
+    {
+      Serial.print(Data_Rx->Data[i], HEX);
+      Serial.print(" ");
+    }
+    Serial.println();
+    Serial.println("END LORA_Receive_Data -- ");
+  #endif
 }
 /*
 *****************************************************************************************
@@ -551,11 +566,37 @@ void LoRa_Send_JoinReq(sLoRa_OTAA *OTAA_Data, sSettings *LoRa_Settings)
       Serial.println("\n----------------------------------------");
       Serial.println("START LoRa_Send_JoinReq -- ");
       Serial.println("----");
+      Serial.println((String)"Message.Direction: "+Message.Direction);
+      Serial.println((String)"MAC_Header: "+ Message.MAC_Header);  
+      Serial.print((String)"Message.MIC: ");
+      for (i = 0;i < 4; i++)
+      {
+        Serial.print(Message.MIC[i], HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print((String)"OTAA_Data.DevEUI: ");
+      for (i = 0;i < 8; i++)
+      {
+        Serial.print(OTAA_Data->DevEUI[i], HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.print((String)"OTAA_Data.AppEUI: ");
+      for (i = 0;i < 8; i++)
+      {
+        Serial.print(OTAA_Data->AppEUI[i], HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
       Serial.print((String)"OTAA_Data.DevNonce: ");
-      Serial.print(OTAA_Data->DevNonce[0], HEX);
-      Serial.print(" ");
-      Serial.print(OTAA_Data->DevNonce[1], HEX);
-      Serial.println("\n----");
+      for (i = 0;i < 2; i++)
+      {
+        Serial.print(OTAA_Data->DevNonce[i], HEX);
+        Serial.print(" ");
+      }
+      Serial.println();
+      Serial.println("----");
       Serial.print("RFM_Package.Data: ");
       for (i = 0;i < RFM_Package.Counter; i++)
       {
@@ -680,6 +721,28 @@ bool LORA_join_Accept(sBuffer *Data_Rx,sLoRa_Session *Session_Data, sLoRa_OTAA *
           Serial.println("START LORA_join_Accept -- ");
           Serial.println("----");
           Serial.println((String)"Message.MAC_Header: "+ Message->MAC_Header);
+          Serial.print("AppNonce: ");
+          for(i = 0; i< 3; i++)
+          {
+            Serial.print(OTAA_Data->AppNonce[i], HEX);
+            Serial.print(" ");
+          }
+          Serial.println();
+          Serial.print("NetID: ");
+          for(i = 0; i< 3; i++)
+          {
+            Serial.print(OTAA_Data->NetID[i], HEX);
+            Serial.print(" ");
+          }
+          Serial.println();
+          Serial.print("session Device address (DevAddr): ");
+          for(i = 0; i< 4; i++)
+          {
+            Serial.print(Data_Rx->Data[i + 7], HEX);
+            Serial.print(" ");
+          }
+          Serial.println();
+          Serial.println("----");
           Serial.print("Data_Rx: ");
           for (i = 0;i < Data_Rx->Counter; i++)
           {

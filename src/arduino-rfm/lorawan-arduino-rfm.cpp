@@ -178,35 +178,6 @@ bool LoRaWANClass::join(void)
         Serial.println((String)"LoRa_Settings.Datarate_Rx: "+LoRa_Settings.Datarate_Rx);
         Serial.println((String)"LoRa_Settings.Channel_Rx: "+LoRa_Settings.Channel_Rx);
         Serial.println((String)"LoRa_Settings.Transmit_Power: "+LoRa_Settings.Transmit_Power);
-        Serial.println("----");
-        Serial.println((String)"Message_Rx.MAC_Header: "+Message_Rx.MAC_Header);
-        Serial.print((String)"Message_Rx.DevAddr: ");
-        for (i = 0;i < 4; i++)
-        {
-          Serial.print(Message_Rx.DevAddr[i], HEX);
-          Serial.print(" ");
-        }
-        Serial.println();
-        Serial.println((String)"Message_Rx.Frame_Control: "+Message_Rx.Frame_Control);
-        Serial.println((String)"Message_Rx.Frame_Counter: "+Message_Rx.Frame_Counter);
-        Serial.println((String)"Message_Rx.Frame_Port: "+Message_Rx.Frame_Port);
-        Serial.print((String)"Message_Rx.Frame_Options: ");
-        for (i = 0;i < 15; i++)
-        {
-          Serial.print(Message_Rx.Frame_Options[i], HEX);
-          Serial.print(" ");
-        }
-        Serial.println();
-        Serial.println((String)"Message_Rx.Direction: "+Message_Rx.Direction);
-        Serial.print((String)"Message_Rx.MIC: ");
-        for (i = 0;i < 4; i++)
-        {
-          Serial.print(Message_Rx.MIC[i], HEX);
-          Serial.print(" ");
-        }
-        Serial.println();
-        Serial.println((String)"Message_Rx.Direction: "+Message_Rx.Direction);
-        Serial.println("----");
         Serial.println("END LoRaWANClass::join -- ");
         Serial.println("----------------------------------------\n");
     #endif
