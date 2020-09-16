@@ -587,6 +587,16 @@ void RFM_Send_Package(sBuffer *RFM_Tx_Package, sSettings *LoRa_Settings)
   //Set RFM in Standby mode
   RFM_Switch_Mode(RFM_MODE_STANDBY);
 
+  //
+  //
+  // ***************************************************
+  // ***************************************************
+  // TODO :// SPIT THIS STUFF OUT. I WANT TO SEE IT
+  // ***************************************************
+  //
+  //
+
+  
   //Switch Datarate
   RFM_Change_Datarate(LoRa_Settings->Datarate_Tx);
 
@@ -633,8 +643,8 @@ void RFM_Send_Package(sBuffer *RFM_Tx_Package, sSettings *LoRa_Settings)
   {
     //Switch Back to Continuous receive
     RFM_Continuous_Receive(LoRa_Settings);
+    }
   }
-}
 
 /*
 *****************************************************************************************

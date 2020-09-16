@@ -74,11 +74,9 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
   {
     //Lora send data
     LORA_Send_Data(Data_Tx, Session_Data, LoRa_Settings);
-	prevTime = millis();
+    prevTime = millis();
     *RFM_Command = NO_RFM_COMMAND;
   }
-
-
 
 	// wait rx1 window
   while((digitalRead(RFM_pins.DIO0) != HIGH) && (millis() - prevTime < Receive_Delay_1));
@@ -162,9 +160,10 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
 {
   //Define variables
   unsigned char i;
-  
+
+  Serial.println("---------------       1     --------------------");
   //Initialise RFM buffer
-  unsigned char RFM_Data[64];
+  unsigned char RFM_Data[268]; // Changes from 64 to 255 in an attempt to increase our payload size and accomidate all other packet info
   sBuffer RFM_Package = {&RFM_Data[0], 0x00};
 
   //Initialise Message struct for a transmit message
@@ -257,9 +256,11 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
     RFM_Package.Counter = RFM_Package.Counter + Data_Tx->Counter;
   }
 
+  Serial.println("---------------      2     --------------------");
   //Calculate MIC
   Construct_Data_MIC(&RFM_Package, Session_Data, &Message);
 
+  Serial.println("---------------      3     --------------------");
   //Load MIC in package
   for(i = 0; i < 4; i++)
   {
@@ -298,9 +299,11 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
   // #endif
 
 
+  Serial.println("---------------       4     --------------------");
   //Send Package
   RFM_Send_Package(&RFM_Package, LoRa_Settings);
 
+  Serial.println("---------------      5     --------------------");
   //Raise Frame counter
   if(*Session_Data->Frame_Counter != 0xFFFF)
   {
@@ -345,14 +348,12 @@ void LORA_Receive_Data(sBuffer *Data_Rx, sLoRa_Session *Session_Data, sLoRa_OTAA
 	unsigned char i;
 
     //Initialise RFM buffer
-	unsigned char RFM_Data[64];
+	unsigned char RFM_Data[268]; // inc to 268 from 64 to accomidate the 255 byte payload size
 	sBuffer RFM_Package = {&RFM_Data[0], 0x00};
 
 	unsigned char MIC_Check;
-  	unsigned char Address_Check;
-
+  unsigned char Address_Check;
 	unsigned char Frame_Options_Length;
-
 	unsigned char Data_Location;
 
 	message_t Message_Status = NO_MESSAGE;

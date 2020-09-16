@@ -334,13 +334,13 @@ void LoRaWANClass::setChannel(unsigned char channel)
     if (channel <= 7) {
         currentChannel = channel;
         LoRa_Settings.Channel_Tx = channel;
-#ifdef US_915
-        LoRa_Settings.Channel_Rx = channel + 0x08;  
-#elif defined(AU_915)
-        LoRa_Settings.Channel_Rx = channel + 0x08;  
-#elif defined(EU_868)  
-        LoRa_Settings.Channel_Rx = channel;
-#endif
+        #ifdef US_915
+                LoRa_Settings.Channel_Rx = channel + 0x08;  
+        #elif defined(AU_915)
+                LoRa_Settings.Channel_Rx = channel + 0x08;  
+        #elif defined(EU_868)  
+                LoRa_Settings.Channel_Rx = channel;
+        #endif
     } else if (channel == MULTI) {
         currentChannel = MULTI;
     }
@@ -447,17 +447,18 @@ void LoRaWANClass::update(void)
 void LoRaWANClass::randomChannel()
 {
     unsigned char freq_idx;
-#ifdef AS_923
-    freq_idx = random(0,9);
-    // limit drate, ch 8 -> sf7bw250
-    LoRa_Settings.Datarate_Tx = freq_idx == 0x08? 0x06 : drate_common;
-#elif defined(EU_868)    
-    freq_idx = random(0,7);
-    LoRa_Settings.Channel_Rx=freq_idx;      // same rx and tx channel 
-#else // US_915 or AU_915
-    freq_idx = random(0,8);
-    LoRa_Settings.Channel_Rx = freq_idx + 0x08;
-#endif
+
+    #ifdef AS_923
+        freq_idx = random(0,9);
+        // limit drate, ch 8 -> sf7bw250
+        LoRa_Settings.Datarate_Tx = freq_idx == 0x08? 0x06 : drate_common;
+    #elif defined(EU_868)    
+        freq_idx = random(0,7);
+        LoRa_Settings.Channel_Rx=freq_idx;      // same rx and tx channel 
+    #else // US_915 or AU_915
+        freq_idx = random(0,8);
+        LoRa_Settings.Channel_Rx = freq_idx + 0x08;
+    #endif
     LoRa_Settings.Channel_Tx = freq_idx;
 }
 
@@ -468,7 +469,6 @@ unsigned int LoRaWANClass::getFrameCounter() {
 void LoRaWANClass::setFrameCounter(unsigned int FrameCounter) {
     Frame_Counter_Tx = FrameCounter;
 }
-
 
 
 // define lora objet 

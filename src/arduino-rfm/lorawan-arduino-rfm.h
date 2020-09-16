@@ -92,9 +92,9 @@ class LoRaWANClass
 
     private:        
         // Messages
-        unsigned char Data_Tx[64];
+        unsigned char Data_Tx[255]; // inc from 64 to 255 because we want a payload of 255 bytes
         sBuffer Buffer_Tx;
-        unsigned char Data_Rx[64];
+        unsigned char Data_Rx[255]; // inc from 64 to 255 b/c we want a payload of 255 bytes
         sBuffer Buffer_Rx;
         sLoRa_Message Message_Rx;
 
