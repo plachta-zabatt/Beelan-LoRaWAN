@@ -175,6 +175,7 @@ void Construct_Data_MIC(sBuffer *Buffer, sLoRa_Session *Session_Data, sLoRa_Mess
 
     unsigned char Block_B[16];
 
+
     //Construct Block B
 	Block_B[0] = 0x49;
 	Block_B[1] = 0x00;
@@ -198,11 +199,13 @@ void Construct_Data_MIC(sBuffer *Buffer, sLoRa_Session *Session_Data, sLoRa_Mess
 	Block_B[14] = 0x00;
 	Block_B[15] = Buffer->Counter;
 
+
     //Copy Block B into MIC data
     for(i = 0x00; i < 16; i++)
     {
         MIC_Data[i] = Block_B[i];
     }
+
 
     //Add data to it
     for(i = 0x00; i < Buffer->Counter; i++)
@@ -215,6 +218,20 @@ void Construct_Data_MIC(sBuffer *Buffer, sLoRa_Session *Session_Data, sLoRa_Mess
 
     //Calculate the MIC
     Calculate_MIC(&MIC_Buffer, Session_Data->NwkSKey, Message);
+
+    // Serial.println("----RFM_Package");
+
+    // Serial.println("----");
+    // Serial.println((String)"RFM_Package.Counter" + Buffer->Counter);
+    // Serial.print("RFM_Package: ");
+    // for (i = 0;i < Buffer->Counter; i++)
+    // {
+    //   Serial.print(Buffer->Data[i], HEX);
+    //   Serial.print(" ");
+    // }
+    // Serial.println();
+    // Serial.println("----");
+
 }
 
 /*

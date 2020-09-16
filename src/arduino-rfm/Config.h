@@ -1,7 +1,7 @@
 //Uncomment for debug 
 // #define DEBUG
-#define DEBUG_LVL2 // Robust debugging, following allong almost the entire process, but not quite as intense as DEBUG
-// #define DEBUG_3 
+// #define DEBUG_LVL2 // Robust debugging, following allong almost the entire process, but not quite as intense as DEBUG
+//#define DEBUG_LVL3 
 
 
 // LoRaWAN freq band

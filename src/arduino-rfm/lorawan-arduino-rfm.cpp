@@ -364,13 +364,6 @@ void LoRaWANClass::setTxPower1(unsigned char power_idx)
 
 int LoRaWANClass::readData(char *outBuff)
 {
-
-    Serial.begin(115200);
-    delay(2000);
-    //Serial.println("readData --");
-    //Serial.println((String)"Rx_Status: "+Rx_Status+"\n");
-
-
     int res = 0;
     //If there is new data
     if(Rx_Status == NEW_RX)
@@ -405,14 +398,7 @@ bool LoRaWANClass::readAck(void)
 
 void LoRaWANClass::update(void)
 {
-    Serial.begin(115200);
-    delay(2000);
-    //Serial.println("update --");
-    //Serial.println((String)"RFM_Command_Status: "+RFM_Command_Status);
-    //Serial.println((String)"LoRa_Settings.Mport: "+LoRa_Settings.Mport);
-    //Serial.println((String)"LoRa_Settings.Mote_Class: "+LoRa_Settings.Mote_Class);
-    //Serial.println((String)"LoRa_Settings.Channel_Rx: "+LoRa_Settings.Channel_Rx);
-    //Serial.println((String)"LoRa_Settings.Datarate_Rx: "+LoRa_Settings.Datarate_Rx);
+
     //Type A mote transmit receive cycle
     if((RFM_Command_Status == NEW_RFM_COMMAND || RFM_Command_Status == JOIN) && LoRa_Settings.Mote_Class == CLASS_A)
     {

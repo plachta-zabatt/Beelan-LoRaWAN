@@ -610,10 +610,14 @@ void RFM_Send_Package(sBuffer *RFM_Tx_Package, sSettings *LoRa_Settings)
   RFM_Write(RFM_REG_FIFO_ADDR_PTR, RFM_Tx_Location);
 
   //Write Payload to FiFo
+  //Serial.print("RFM_Tx_Package->Data: ");
   for (i = 0;i < RFM_Tx_Package->Counter; i++)
   {
+    // Serial.print(RFM_Tx_Package->Data[i], HEX);
+    // Serial.print(" ");
     RFM_Write(RFM_REG_FIFO, RFM_Tx_Package->Data[i]);
   }
+  //Serial.println();
 
   //Switch RFM to Tx
   RFM_Write(RFM_REG_OP_MODE,0x83);
