@@ -161,7 +161,6 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
   //Define variables
   unsigned char i;
 
-  Serial.println("---------------       1     --------------------");
   //Initialise RFM buffer
   unsigned char RFM_Data[268]; // Changes from 64 to 255 in an attempt to increase our payload size and accomidate all other packet info
   sBuffer RFM_Package = {&RFM_Data[0], 0x00};
@@ -256,11 +255,9 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
     RFM_Package.Counter = RFM_Package.Counter + Data_Tx->Counter;
   }
 
-  Serial.println("---------------      2     --------------------");
   //Calculate MIC
   Construct_Data_MIC(&RFM_Package, Session_Data, &Message);
 
-  Serial.println("---------------      3     --------------------");
   //Load MIC in package
   for(i = 0; i < 4; i++)
   {
@@ -299,11 +296,9 @@ void LORA_Send_Data(sBuffer *Data_Tx, sLoRa_Session *Session_Data, sSettings *Lo
   // #endif
 
 
-  Serial.println("---------------       4     --------------------");
   //Send Package
   RFM_Send_Package(&RFM_Package, LoRa_Settings);
 
-  Serial.println("---------------      5     --------------------");
   //Raise Frame counter
   if(*Session_Data->Frame_Counter != 0xFFFF)
   {

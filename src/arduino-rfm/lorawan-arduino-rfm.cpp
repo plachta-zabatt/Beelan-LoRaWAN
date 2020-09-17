@@ -87,23 +87,23 @@ bool LoRaWANClass::init(void)
     LoRa_Settings.Mote_Class = 0x00; //0x00 is type A, 0x01 is type C
     
     // Rx
-#if defined(AS_923)
-    LoRa_Settings.Datarate_Rx = 0x02;   //set to SF10 BW 125 kHz
-#elif defined(EU_868)
-    LoRa_Settings.Datarate_Rx = 0x03;   //set to SF9 BW 125 kHz
-#else //US_915 or AU_915
-    LoRa_Settings.Datarate_Rx = 0x0C;   //set to SF8 BW 500 kHz
-#endif
-    LoRa_Settings.Channel_Rx = 0x0A;    // set to recv channel
+    #if defined(AS_923)
+        LoRa_Settings.Datarate_Rx = 0x02;   //set to SF10 BW 125 kHz
+    #elif defined(EU_868)
+        LoRa_Settings.Datarate_Rx = 0x03;   //set to SF9 BW 125 kHz
+    #else //US_915 or AU_915
+        LoRa_Settings.Datarate_Rx = 0x0C;   //set to SF8 BW 500 kHz
+    #endif
+        LoRa_Settings.Channel_Rx = 0x0A;    // set to recv channel
 
     // Tx
-#if defined(US_915)
-    LoRa_Settings.Datarate_Tx = drate_common = 0x02;   //set to SF7 BW 125 kHz
-#elif defined(AU_915)
-    LoRa_Settings.Datarate_Tx = drate_common = 0x02;   //set to SF7 BW 125 kHz
-#else
-    LoRa_Settings.Datarate_Tx = drate_common = 0x00;   //set to SF12 BW 125 kHz
-#endif
+    #if defined(US_915)
+        LoRa_Settings.Datarate_Tx = drate_common = 0x02;   //set to SF7 BW 125 kHz
+    #elif defined(AU_915)
+        LoRa_Settings.Datarate_Tx = drate_common = 0x02;   //set to SF7 BW 125 kHz
+    #else
+        LoRa_Settings.Datarate_Tx = drate_common = 0x00;   //set to SF12 BW 125 kHz
+    #endif
     LoRa_Settings.Channel_Tx = 0x00;    // set to channel 0
 
     LoRa_Settings.Confirm = 0x00; //0x00 unconfirmed, 0x01 confirmed
@@ -123,7 +123,7 @@ bool LoRaWANClass::init(void)
     pinMode(RFM_pins.DIO0,INPUT);
     pinMode(RFM_pins.DIO1,INPUT);
     #ifdef BOARD_DRAGINO_SHIELD
-    pinMode(RFM_pins.DIO5,INPUT);
+        pinMode(RFM_pins.DIO5,INPUT);
     #endif
     pinMode(RFM_pins.DIO2,INPUT);
     pinMode(RFM_pins.CS,OUTPUT);
@@ -365,9 +365,12 @@ void LoRaWANClass::setTxPower1(unsigned char power_idx)
 int LoRaWANClass::readData(char *outBuff)
 {
     int res = 0;
+
     //If there is new data
     if(Rx_Status == NEW_RX)
     {
+
+        Serial.print("outBuff: ");
         res = Buffer_Rx.Counter;
         memset(outBuff, 0x00, res + 1);
         memcpy(outBuff, Buffer_Rx.Data, res);
