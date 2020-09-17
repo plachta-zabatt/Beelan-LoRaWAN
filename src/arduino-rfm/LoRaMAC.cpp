@@ -133,14 +133,14 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
 		// TODO
 		// The RX2 receive window uses a fixed frequency and data rate. The default parameters are 
  		// 869.525 MHz / DR0 (SF12, 125 kHz) 
-	#ifdef EU_868
-		unsigned char previousChannelRX=LoRa_Settings->Channel_Rx;
-		unsigned char previousDatarateRX=LoRa_Settings->Datarate_Rx;
-		LoRa_Settings->Channel_Rx=CHRX2;
-		LoRa_Settings->Datarate_Rx=SF9BW125;
-		LoRa_Settings->Channel_Rx=previousChannelRX;
-		LoRa_Settings->Datarate_Rx=previousDatarateRX;
-	#endif
+  	#ifdef EU_868
+  		unsigned char previousChannelRX=LoRa_Settings->Channel_Rx;
+  		unsigned char previousDatarateRX=LoRa_Settings->Datarate_Rx;
+  		LoRa_Settings->Channel_Rx=CHRX2;
+  		LoRa_Settings->Datarate_Rx=SF9BW125;
+  		LoRa_Settings->Channel_Rx=previousChannelRX;
+  		LoRa_Settings->Datarate_Rx=previousDatarateRX;
+  	#endif
 		LORA_Receive_Data(Data_Rx, Session_Data, OTAA_Data, Message_Rx, LoRa_Settings);
 		*RFM_Command = NO_RFM_COMMAND;
 	}
@@ -353,9 +353,12 @@ void LORA_Receive_Data(sBuffer *Data_Rx, sLoRa_Session *Session_Data, sLoRa_OTAA
 
 	message_t Message_Status = NO_MESSAGE;
 
+  Serial.println("---------------  1  ---------------");
+
 	//If it is a type A device switch RFM to single receive
 	if(LoRa_Settings->Mote_Class == CLASS_A)
 	{
+    Serial.println("---------------  1.1  ---------------");
 		Message_Status = RFM_Single_Receive(LoRa_Settings);  
 	}
 	else
@@ -369,6 +372,7 @@ void LORA_Receive_Data(sBuffer *Data_Rx, sLoRa_Session *Session_Data, sLoRa_OTAA
 	//If there is a message received get the data from the RFM
 	if(Message_Status == NEW_MESSAGE)
 	{
+    Serial.println("---------------  2  ---------------");
 		Message_Status = RFM_Get_Package(&RFM_Package);
 
 		//If mote class C switch RFM back to continuous receive
@@ -382,6 +386,7 @@ void LORA_Receive_Data(sBuffer *Data_Rx, sLoRa_Session *Session_Data, sLoRa_OTAA
 	//if CRC ok breakdown package
 	if(Message_Status == CRC_OK)
 	{
+    Serial.println("---------------  3  ---------------");
 		//Get MAC_Header
     Message->MAC_Header = RFM_Data[0];
 

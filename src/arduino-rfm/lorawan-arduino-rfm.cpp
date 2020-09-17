@@ -369,8 +369,13 @@ int LoRaWANClass::readData(char *outBuff)
     //If there is new data
     if(Rx_Status == NEW_RX)
     {
-
         Serial.print("outBuff: ");
+        for (int i = 0;i < Buffer_Rx.Counter; i++)
+        {
+            Serial.print(Buffer_Rx.Data[i], HEX);
+            Serial.print(" ");
+        }
+        Serial.println();
         res = Buffer_Rx.Counter;
         memset(outBuff, 0x00, res + 1);
         memcpy(outBuff, Buffer_Rx.Data, res);

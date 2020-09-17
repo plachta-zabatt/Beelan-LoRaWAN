@@ -596,7 +596,7 @@ void RFM_Send_Package(sBuffer *RFM_Tx_Package, sSettings *LoRa_Settings)
   //
   //
 
-  
+
   //Switch Datarate
   RFM_Change_Datarate(LoRa_Settings->Datarate_Tx);
 
@@ -673,6 +673,7 @@ message_t RFM_Single_Receive(sSettings *LoRa_Settings)
   //Change Channel
   RFM_Change_Channel(LoRa_Settings->Channel_Rx);
 
+
   //Switch RFM to Single reception
   RFM_Switch_Mode(RFM_MODE_RXSINGLE);
 
@@ -687,10 +688,12 @@ message_t RFM_Single_Receive(sSettings *LoRa_Settings)
     RFM_Write(RFM_REG_IRQ_FLAGS,0xE0);
     Message_Status = TIMEOUT;
   }
+    Serial.println("---------------  1.2  ---------------");
 
   //Check for RxDone
   if(digitalRead(RFM_pins.DIO0) == HIGH)
   {
+    Serial.println("---------------  1.3  ---------------");
 	  Message_Status = NEW_MESSAGE;
   }
 
@@ -745,6 +748,8 @@ message_t RFM_Get_Package(sBuffer *RFM_Rx_Package)
   unsigned char RFM_Interrupts = 0x00;
   unsigned char RFM_Package_Location = 0x00;
   message_t Message_Status;
+
+  Serial.println("------------------  a  ------------------");
 
   //Get interrupt register
   RFM_Interrupts = RFM_Read(RFM_REG_IRQ_FLAGS);
