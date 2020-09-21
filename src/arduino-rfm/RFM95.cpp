@@ -681,9 +681,11 @@ message_t RFM_Single_Receive(sSettings *LoRa_Settings)
   //Wait until timeout or RxDone interrupt
   while((digitalRead(RFM_pins.DIO0) == LOW) && (digitalRead(RFM_pins.DIO1) == LOW));
 
+
   //Check for Timeout
   if(digitalRead(RFM_pins.DIO1) == HIGH)
   {
+    //Serial.print(" ");
     //Clear interrupt register
     RFM_Write(RFM_REG_IRQ_FLAGS,0xE0);
     Message_Status = TIMEOUT;

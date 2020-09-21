@@ -88,6 +88,14 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
 	*RFM_Command = NO_RFM_COMMAND;
 
 
+  // Serial.print("outBufff: ");
+  // for (int i = 0;i < Data_Rx->Counter; i++)
+  // {
+  //     Serial.print(Data_Rx->Data[i], HEX);
+  //     Serial.print(" ");
+  // }
+  // Serial.println();
+
   
   // #ifdef DEBUG_LVL2
   //   Serial.println("\n----------------------------------------");
@@ -381,6 +389,9 @@ void LORA_Receive_Data(sBuffer *Data_Rx, sLoRa_Session *Session_Data, sLoRa_OTAA
 			RFM_Continuous_Receive(LoRa_Settings);
 		}
 	}
+
+
+ // Serial.println((String)"Msg Status: "+Message_Status);
 
 	//if CRC ok breakdown package
 	if(Message_Status == CRC_OK)
