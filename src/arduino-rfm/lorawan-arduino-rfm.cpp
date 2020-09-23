@@ -364,8 +364,8 @@ void LoRaWANClass::setTxPower1(unsigned char power_idx)
 
 int LoRaWANClass::readData(char *outBuff)
 {
-    Serial.begin(115200);
-    delay(2000);
+    // Serial.begin(115200);
+    // delay(2000);
     int res = 0;
 
     //If there is new data

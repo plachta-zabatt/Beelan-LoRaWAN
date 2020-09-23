@@ -69,8 +69,8 @@ void LORA_Cycle(sBuffer *Data_Tx, sBuffer *Data_Rx, RFM_command_t *RFM_Command, 
   unsigned char i;
 	unsigned long prevTime = 0;
 
-  Serial.begin(115200);
-  delay(2000);
+  // Serial.begin(115200);
+  // delay(2000);
   //Transmit
   if(*RFM_Command == NEW_RFM_COMMAND)
   {
