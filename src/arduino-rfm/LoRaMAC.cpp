@@ -439,6 +439,8 @@ static void Generate_DevNonce(unsigned char *DevNonce)
 {
   unsigned int RandNumber;
 
+  randomSeed(micros());
+
   RandNumber = random(0xFFFF);
 
   DevNonce[0] = RandNumber & 0x00FF;
